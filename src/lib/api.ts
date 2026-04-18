@@ -80,9 +80,10 @@ export const api = {
     unwrapError('Failed to delete product', error);
   },
 
-  async createOrder(order: Partial<Order>): Promise<void> {
-    const { error } = await supabase.from('orders').insert([order]);
+  async createOrder(order: Partial<Order>): Promise<Order> {
+    const { data, error } = await supabase.from('orders').insert([order]).select().single();
     unwrapError('Failed to create order', error);
+    return normalizeId(data as Order & DbRecord);
   },
 
   async getOrders(): Promise<Order[]> {
