@@ -30,18 +30,6 @@ export default function Services() {
         </p>
       </div>
 
-      <div className="rounded-[32px] border border-slate-200 bg-white p-6 shadow-sm md:p-8">
-        <h2 className="text-2xl font-display font-bold text-slate-900 md:text-3xl">
-          Какие услуги чаще всего ищут в ZhasaVet
-        </h2>
-        <p className="mt-4 text-base leading-8 text-slate-500 md:text-lg">
-          На этой странице собраны направления, по которым нас чаще находят в локальном поиске:
-          ветклиника Караганда, ветеринар Майкудук, прививки собакам и кошкам Караганда,
-          консультация по кормлению и сезонная защита от паразитов. Под каждой услугой можно сразу
-          отправить заявку в WhatsApp и согласовать удобное время.
-        </p>
-      </div>
-
       <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
         {MOCK_SERVICES.map((service, index) => {
           const Icon = icons[index % icons.length];

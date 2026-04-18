@@ -21,11 +21,6 @@ export default function Doctors() {
         <h1 className="text-4xl font-display font-bold text-slate-900 md:text-5xl">
           Ветеринар в Караганде, которому можно доверить важные вопросы о питомце
         </h1>
-        <p className="text-lg leading-8 text-slate-500">
-          В ZhasaVet мы делаем ставку на спокойную диагностику, понятные объяснения и профилактику,
-          которая действительно помогает в повседневной жизни владельца. Ниже — врач, который
-          ведёт приём и помогает выстроить понятный план действий без лишней тревоги.
-        </p>
       </div>
 
       <section className="grid grid-cols-1 items-start gap-8 lg:grid-cols-[420px_minmax(0,1fr)]">

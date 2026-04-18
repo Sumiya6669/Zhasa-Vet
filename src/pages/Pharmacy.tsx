@@ -214,19 +214,6 @@ export default function Pharmacy() {
           </div>
         </div>
 
-        <div className="rounded-[32px] border border-slate-200 bg-white p-6 shadow-sm md:p-8">
-          <h2 className="text-2xl font-display font-bold text-slate-900 md:text-3xl">
-            Лекарства для животных, корма и популярные бренды в Майкудуке
-          </h2>
-          <p className="mt-4 text-base leading-8 text-slate-500 md:text-lg">
-            Каталог ZhasaVet помогает закрыть частые локальные запросы: ветаптека Караганда,
-            лекарства для животных Караганда, купить корм для собак Караганда, ветеринарная аптека
-            Майкудук. В ассортименте собраны востребованные позиции для собак, кошек, птиц,
-            лошадей, фермерских хозяйств, а также популярные бренды и средства для профилактики и
-            домашнего ухода.
-          </p>
-        </div>
-
         {loading ? (
           <div className="flex flex-col items-center justify-center gap-4 rounded-[32px] border border-slate-200 bg-white py-24">
             <Loader2 size={32} className="animate-spin text-brand-teal" />

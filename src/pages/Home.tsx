@@ -142,21 +142,6 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="mx-auto mt-16 max-w-7xl px-4">
-        <div className="rounded-[32px] border border-slate-200 bg-white p-6 shadow-sm md:p-8">
-          <h2 className="text-3xl font-display font-bold text-slate-900 md:text-4xl">
-            Ветеринарная аптека в Караганде для повседневного ухода и профилактики
-          </h2>
-          <p className="mt-4 max-w-4xl text-base leading-8 text-slate-500 md:text-lg">
-            В ZhasaVet удобно купить корм для собак и кошек в Караганде, подобрать лекарства для
-            животных, средства от паразитов, товары для фермерских хозяйств и популярные позиции,
-            которые часто ищут по запросам Royal Canin Караганда, Hill&apos;s Караганда и Frontline
-            Караганда. Мы делаем упор на понятный ассортимент, живую консультацию и локальный
-            сервис для района Майкудук.
-          </p>
-        </div>
-      </section>
-
       <section className="mx-auto mt-24 max-w-7xl space-y-10 px-4">
         <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
           <div>

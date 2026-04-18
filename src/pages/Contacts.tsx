@@ -55,11 +55,6 @@ export default function Contacts() {
         <h1 className="text-4xl font-display font-bold text-slate-900 md:text-5xl">
           Контакты ветаптеки и ветклиники ZhasaVet в Караганде
         </h1>
-        <p className="text-lg leading-8 text-slate-500">
-          Если вы ищете ветаптеку в Караганде или хотите записаться к ветеринару в Майкудуке,
-          свяжитесь с нами любым удобным способом. Быстрее всего отвечаем в WhatsApp, а по телефону
-          подскажем по товарам, услугам, наличию и записи на приём.
-        </p>
       </div>
 
       <section className="grid grid-cols-1 gap-8 lg:grid-cols-[minmax(0,1fr)_420px]">

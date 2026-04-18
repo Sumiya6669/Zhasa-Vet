@@ -41,10 +41,6 @@ export default function Blog() {
         <h1 className="text-4xl font-display font-bold text-slate-900 md:text-5xl">
           Блог ZhasaVet о здоровье животных в Караганде
         </h1>
-        <p className="text-lg leading-8 text-slate-500">
-          Пишем о профилактике, домашнем уходе, питании и сезонных вопросах, с которыми чаще всего
-          сталкиваются владельцы кошек, собак и других животных в Караганде и Майкудуке.
-        </p>
       </div>
 
       {loading ? (
