@@ -15,15 +15,19 @@ import { api } from '../lib/api';
 import { buildWhatsAppLink } from '../mockData';
 import { CartItem } from '../types';
 
+function buildOrderNumber() {
+  return `ZV-${Date.now().toString().slice(-8)}`;
+}
+
 function formatOrderWhatsAppMessage({
-  orderId,
+  orderNumber,
   customerName,
   customerPhone,
   items,
   total,
   notes,
 }: {
-  orderId: string;
+  orderNumber: string;
   customerName: string;
   customerPhone: string;
   items: CartItem[];
@@ -33,12 +37,12 @@ function formatOrderWhatsAppMessage({
   const itemsText = items
     .map(
       (item, index) =>
-        `${index + 1}. ${item.name} x${item.quantity} — ${(item.price * item.quantity).toLocaleString('ru-RU')} тг`,
+        `${index + 1}. ${item.name} x${item.quantity} - ${(item.price * item.quantity).toLocaleString('ru-RU')} тг`,
     )
     .join('\n');
 
   return [
-    `Новый заказ №${orderId}`,
+    `Новый заказ №${orderNumber}`,
     `Имя: ${customerName}`,
     `Телефон: ${customerPhone}`,
     'Товары:',
@@ -56,7 +60,7 @@ export default function Checkout() {
   const { user } = useAuth();
   const [loading, setLoading] = useState(false);
   const [isOrdered, setIsOrdered] = useState(false);
-  const [createdOrderId, setCreatedOrderId] = useState('');
+  const [orderNumber, setOrderNumber] = useState('');
   const [whatsAppUrl, setWhatsAppUrl] = useState('');
   const [formData, setFormData] = useState({
     name: '',
@@ -81,22 +85,23 @@ export default function Checkout() {
     }
 
     setLoading(true);
-    const whatsAppWindow = window.open('', '_blank');
+    const generatedOrderNumber = buildOrderNumber();
+    const whatsappWindow = window.open('', '_blank');
 
     try {
-      const createdOrder = await api.createOrder({
+      await api.createOrder({
         customer_name: formData.name.trim(),
         customer_phone: formData.phone.trim(),
         user_id: user?.id,
         items: cart,
         total,
         status: 'new',
-        date: new Date().toLocaleString('ru-RU'),
+        date: `№ ${generatedOrderNumber} • ${new Date().toLocaleString('ru-RU')}`,
       });
 
       const orderWhatsAppUrl = buildWhatsAppLink(
         formatOrderWhatsAppMessage({
-          orderId: createdOrder.id,
+          orderNumber: generatedOrderNumber,
           customerName: formData.name.trim(),
           customerPhone: formData.phone.trim(),
           items: cart,
@@ -105,17 +110,17 @@ export default function Checkout() {
         }),
       );
 
-      setCreatedOrderId(createdOrder.id);
+      setOrderNumber(generatedOrderNumber);
       setWhatsAppUrl(orderWhatsAppUrl);
       setIsOrdered(true);
 
-      if (whatsAppWindow) {
-        whatsAppWindow.location.href = orderWhatsAppUrl;
+      if (whatsappWindow) {
+        whatsappWindow.location.href = orderWhatsAppUrl;
       }
 
       window.setTimeout(() => clearCart(), 300);
     } catch (err: any) {
-      whatsAppWindow?.close();
+      whatsappWindow?.close();
       alert(err.message || 'Не удалось оформить заказ. Проверьте данные и попробуйте снова.');
     } finally {
       setLoading(false);
@@ -135,11 +140,11 @@ export default function Checkout() {
           </div>
           <h1 className="text-3xl font-display font-bold text-slate-900">Заказ оформлен</h1>
           <p className="mt-4 leading-7 text-slate-500">
-            Заказ принят. Сообщение для администратора уже подготовлено в WhatsApp, чтобы можно
-            было быстро подтвердить наличие и время самовывоза.
+            Сообщение для администратора уже подготовлено в WhatsApp, чтобы можно было быстро
+            подтвердить наличие и время самовывоза.
           </p>
-          {createdOrderId && (
-            <div className="mt-4 text-sm font-semibold text-brand-teal">Заказ №{createdOrderId}</div>
+          {orderNumber && (
+            <div className="mt-4 text-sm font-semibold text-brand-teal">Заказ №{orderNumber}</div>
           )}
           <div className="mt-6 rounded-3xl border border-slate-100 bg-slate-50 p-5 text-left text-sm text-slate-600">
             <div className="font-semibold text-slate-900">Адрес самовывоза</div>
@@ -183,10 +188,6 @@ export default function Checkout() {
             <h1 className="text-4xl font-display font-bold text-slate-900 md:text-5xl">
               Оформление заказа
             </h1>
-            <p className="mt-3 leading-7 text-slate-500">
-              Заказ оформляется с самовывозом. После отправки он появится в админ-панели, а для
-              администратора откроется готовое сообщение в WhatsApp.
-            </p>
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-8">
@@ -285,7 +286,7 @@ export default function Checkout() {
                   <div key={item.id} className="flex gap-4">
                     <img
                       src={item.img}
-                      alt={`${item.name} — товар ZhasaVet, Караганда`}
+                      alt={`${item.name} - товар ZhasaVet, Караганда`}
                       className="h-16 w-16 rounded-2xl border border-slate-100 object-cover"
                     />
                     <div className="min-w-0 flex-1">
