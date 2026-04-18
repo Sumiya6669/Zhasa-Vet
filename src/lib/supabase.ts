@@ -2,10 +2,18 @@ import { createClient } from '@supabase/supabase-js';
 
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL || '';
 const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY || '';
+const hasSecretSupabaseKey =
+  supabaseAnonKey.startsWith('sb_secret_') || supabaseAnonKey.startsWith('service_role');
+
+if (hasSecretSupabaseKey) {
+  console.error(
+    'VITE_SUPABASE_ANON_KEY contains a secret Supabase key. Replace it with the public anon key and rebuild.',
+  );
+}
 
 // Only initialize the client if we have valid credentials to prevent startup crash
 // If keys are missing, we export a proxy that logs a helpful error when used
-export const supabase = (supabaseUrl && supabaseUrl.startsWith('http')) 
+export const supabase = (supabaseUrl && supabaseUrl.startsWith('http') && !hasSecretSupabaseKey) 
   ? createClient(supabaseUrl, supabaseAnonKey)
   : new Proxy({} as any, {
       get: (_target, prop) => {
@@ -18,7 +26,11 @@ export const supabase = (supabaseUrl && supabaseUrl.startsWith('http'))
             getUser: () => Promise.resolve({ data: { user: null } }),
           };
         }
-        console.warn('Supabase is not configured. Please add VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY to your environment variables.');
+        console.warn(
+          hasSecretSupabaseKey
+            ? 'Supabase is blocked because VITE_SUPABASE_ANON_KEY contains a secret key. Use the public anon key.'
+            : 'Supabase is not configured. Please add VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY to your environment variables.',
+        );
         return () => ({
           from: () => ({
             select: () => Promise.resolve({ data: [], error: null }),
@@ -32,4 +44,9 @@ export const supabase = (supabaseUrl && supabaseUrl.startsWith('http'))
       }
     });
 
-export const isSupabaseConfigured = !!(supabaseUrl && supabaseUrl.startsWith('http') && supabaseAnonKey);
+export const isSupabaseConfigured = !!(
+  supabaseUrl &&
+  supabaseUrl.startsWith('http') &&
+  supabaseAnonKey &&
+  !hasSecretSupabaseKey
+);

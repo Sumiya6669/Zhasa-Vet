@@ -274,7 +274,7 @@ function Navbar({
       <div className="max-w-7xl mx-auto px-4 h-20 flex items-center justify-between">
         <Link to="/" className="flex items-center gap-3">
           <img
-            src="/logo.png"
+            src="/logo.svg"
             alt="ZhasaVet"
             className="h-12 w-auto object-contain"
             onError={(event) => {
@@ -470,7 +470,7 @@ function Footer() {
         <div className="space-y-4">
           <div className="flex items-center gap-3 text-white">
             <img
-              src="/logo.png"
+              src="/logo.svg"
               alt="ZhasaVet"
               className="h-10 w-auto object-contain brightness-0 invert"
               onError={(event) => {
