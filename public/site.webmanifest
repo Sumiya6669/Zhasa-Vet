@@ -1,0 +1,14 @@
+{
+  "name": "ZhasaVet",
+  "short_name": "ZhasaVet",
+  "icons": [
+    {
+      "src": "/logo.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "theme_color": "#12b8b0",
+  "background_color": "#ffffff",
+  "display": "standalone"
+}
