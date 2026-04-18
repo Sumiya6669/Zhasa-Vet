@@ -49,21 +49,21 @@ export default function AdminLogin() {
   };
 
   return (
-    <div className="min-h-[calc(100vh-5rem)] flex items-center justify-center px-4 py-12">
-      <div className="w-full max-w-md rounded-[40px] border border-slate-200 bg-white shadow-2xl overflow-hidden">
-        <div className="bg-slate-950 text-white px-8 py-10">
-          <div className="w-14 h-14 rounded-2xl bg-white/10 flex items-center justify-center mb-6">
+    <div className="flex min-h-[calc(100vh-5rem)] items-center justify-center px-4 py-12">
+      <div className="w-full max-w-md overflow-hidden rounded-[40px] border border-slate-200 bg-white shadow-2xl">
+        <div className="bg-slate-950 px-8 py-10 text-white">
+          <div className="mb-6 flex h-14 w-14 items-center justify-center rounded-2xl bg-white/10">
             <ShieldCheck size={28} />
           </div>
           <h1 className="text-3xl font-display font-bold">Админ-панель</h1>
-          <p className="text-sm text-slate-300 mt-2">
+          <p className="mt-2 text-sm text-slate-300">
             Войдите под администраторским аккаунтом, чтобы управлять товарами, блогом и заказами.
           </p>
         </div>
 
-        <div className="p-8 space-y-6">
+        <div className="space-y-6 p-8">
           {error && (
-            <div className="rounded-2xl border border-red-100 bg-red-50 px-4 py-3 text-sm text-red-600 flex items-start gap-3">
+            <div className="flex items-start gap-3 rounded-2xl border border-red-100 bg-red-50 px-4 py-3 text-sm text-red-600">
               <AlertCircle size={18} className="mt-0.5 flex-shrink-0" />
               <span>{error}</span>
             </div>
@@ -82,7 +82,7 @@ export default function AdminLogin() {
                   value={identifier}
                   onChange={(event) => setIdentifier(event.target.value)}
                   placeholder="admin-zhasavet"
-                  className="w-full rounded-2xl border border-slate-200 bg-slate-50 pl-12 pr-5 py-4 outline-none transition focus:border-slate-900 focus:ring-2 focus:ring-slate-900/10"
+                  className="w-full rounded-2xl border border-slate-200 bg-slate-50 py-4 pl-12 pr-5 outline-none transition focus:border-slate-900 focus:ring-2 focus:ring-slate-900/10"
                 />
               </div>
             </div>
@@ -99,7 +99,7 @@ export default function AdminLogin() {
                   value={password}
                   onChange={(event) => setPassword(event.target.value)}
                   placeholder="Введите пароль администратора"
-                  className="w-full rounded-2xl border border-slate-200 bg-slate-50 pl-12 pr-5 py-4 outline-none transition focus:border-slate-900 focus:ring-2 focus:ring-slate-900/10"
+                  className="w-full rounded-2xl border border-slate-200 bg-slate-50 py-4 pl-12 pr-5 outline-none transition focus:border-slate-900 focus:ring-2 focus:ring-slate-900/10"
                 />
               </div>
             </div>
@@ -107,15 +107,15 @@ export default function AdminLogin() {
             <button
               type="submit"
               disabled={loading || authLoading}
-              className="w-full rounded-2xl bg-slate-950 py-4 text-white font-semibold hover:bg-black transition-colors disabled:opacity-70 flex items-center justify-center gap-2"
+              className="flex w-full items-center justify-center gap-2 rounded-2xl bg-slate-950 py-4 font-semibold text-white transition-colors hover:bg-black disabled:opacity-70"
             >
-              {loading || authLoading ? <Loader2 size={20} className="animate-spin" /> : 'Войти в панель'}
+              {loading || authLoading ? (
+                <Loader2 size={20} className="animate-spin" />
+              ) : (
+                'Войти в панель'
+              )}
             </button>
           </form>
-
-          <div className="rounded-2xl border border-slate-100 bg-slate-50 px-4 py-3 text-sm text-slate-500 leading-6">
-            Используйте <strong>{ADMIN_EMAIL}</strong> или короткий логин <strong>admin-zhasavet</strong>.
-          </div>
         </div>
       </div>
     </div>

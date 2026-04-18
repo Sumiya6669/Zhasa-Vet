@@ -34,6 +34,7 @@ const Pharmacy = lazy(() => import('./pages/Pharmacy'));
 const Services = lazy(() => import('./pages/Services'));
 
 const CART_STORAGE_KEY = 'zhasavet-cart';
+const LOGO_SRC = `${import.meta.env.BASE_URL}logo.png`;
 
 interface AuthContextType {
   user: User | null;
@@ -276,7 +277,7 @@ function Navbar({
       <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-4">
         <Link to="/" className="flex items-center">
           <img
-            src="/logo.svg"
+            src={LOGO_SRC}
             alt="ZhasaVet"
             className="h-14 w-auto object-contain"
             onError={(event) => {
@@ -474,7 +475,7 @@ function Footer() {
         <div className="space-y-4">
           <div className="flex items-center text-white">
             <img
-              src="/logo.svg"
+              src={LOGO_SRC}
               alt="ZhasaVet"
               className="h-12 w-auto object-contain"
               onError={(event) => {
