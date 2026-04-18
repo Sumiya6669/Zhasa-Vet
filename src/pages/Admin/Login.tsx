@@ -57,7 +57,7 @@ export default function AdminLogin() {
           </div>
           <h1 className="text-3xl font-display font-bold">Админ-панель</h1>
           <p className="mt-2 text-sm text-slate-300">
-            Войдите под администраторским аккаунтом, чтобы управлять товарами, блогом и заказами.
+            Войдите, чтобы управлять товарами, блогом и заказами.
           </p>
         </div>
 
@@ -72,7 +72,7 @@ export default function AdminLogin() {
           <form onSubmit={handleLogin} className="space-y-5">
             <div className="space-y-2">
               <label className="text-xs font-bold uppercase tracking-widest text-slate-400">
-                Логин или e-mail
+                E-mail
               </label>
               <div className="relative">
                 <User size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" />
@@ -81,7 +81,7 @@ export default function AdminLogin() {
                   required
                   value={identifier}
                   onChange={(event) => setIdentifier(event.target.value)}
-                  placeholder="admin-zhasavet"
+                  placeholder="example@mail.com"
                   className="w-full rounded-2xl border border-slate-200 bg-slate-50 py-4 pl-12 pr-5 outline-none transition focus:border-slate-900 focus:ring-2 focus:ring-slate-900/10"
                 />
               </div>
@@ -98,7 +98,7 @@ export default function AdminLogin() {
                   required
                   value={password}
                   onChange={(event) => setPassword(event.target.value)}
-                  placeholder="Введите пароль администратора"
+                  placeholder="Введите пароль"
                   className="w-full rounded-2xl border border-slate-200 bg-slate-50 py-4 pl-12 pr-5 outline-none transition focus:border-slate-900 focus:ring-2 focus:ring-slate-900/10"
                 />
               </div>

@@ -1,25 +1,69 @@
 import { Instagram, Mail, MapPin, MessageCircle, Phone } from 'lucide-react';
+import Seo from '../components/Seo';
 import TikTokIcon from '../components/TikTokIcon';
 import { SITE_CONTACTS, buildWhatsAppLink } from '../mockData';
+
+const contactsSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'LocalBusiness',
+  name: 'ZhasaVet',
+  url: 'https://zhasavet.kz/contacts',
+  image: 'https://zhasavet.kz/logo.png',
+  telephone: SITE_CONTACTS.phoneRaw,
+  email: SITE_CONTACTS.email,
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: 'ул. Сталелитейная, 3/3А',
+    addressLocality: 'Караганда',
+    addressRegion: 'Карагандинская область',
+    addressCountry: 'KZ',
+  },
+  areaServed: ['Караганда', 'Майкудук'],
+  openingHoursSpecification: [
+    {
+      '@type': 'OpeningHoursSpecification',
+      dayOfWeek: [
+        'Monday',
+        'Tuesday',
+        'Wednesday',
+        'Thursday',
+        'Friday',
+        'Saturday',
+        'Sunday',
+      ],
+      opens: '09:00',
+      closes: '21:00',
+    },
+  ],
+};
 
 export default function Contacts() {
   return (
     <div className="mx-auto max-w-7xl space-y-10 px-4 py-12 md:py-16">
+      <Seo
+        title="Контакты ZhasaVet — ветаптека и ветклиника в Караганде, Майкудук"
+        description="Контакты ZhasaVet: Караганда, ул. Сталелитейная, 3/3А, Майкудук. Телефон, WhatsApp, Instagram, TikTok, часы работы и карта проезда."
+        keywords="контакты ветаптека Караганда, ветклиника Майкудук адрес, ветеринарная клиника Караганда телефон, ветаптека Караганда Майкудук"
+        canonicalPath="/contacts"
+        jsonLd={contactsSchema}
+      />
+
       <div className="max-w-3xl space-y-4">
         <span className="inline-flex rounded-full bg-brand-teal/10 px-4 py-2 text-sm font-semibold text-brand-teal">
           Контакты
         </span>
         <h1 className="text-4xl font-display font-bold text-slate-900 md:text-5xl">
-          Свяжитесь с ZhasaVet удобным способом
+          Контакты ветаптеки и ветклиники ZhasaVet в Караганде
         </h1>
         <p className="text-lg leading-8 text-slate-500">
-          Мы подскажем по товарам, сориентируем по услугам и поможем оформить заказ или запись на
-          приём. Быстрее всего отвечаем по WhatsApp и в социальных сетях.
+          Если вы ищете ветаптеку в Караганде или хотите записаться к ветеринару в Майкудуке,
+          свяжитесь с нами любым удобным способом. Быстрее всего отвечаем в WhatsApp, а по телефону
+          подскажем по товарам, услугам, наличию и записи на приём.
         </p>
       </div>
 
       <section className="grid grid-cols-1 gap-8 lg:grid-cols-[minmax(0,1fr)_420px]">
-        <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
+        <div className="grid grid-cols-1 gap-5 md:auto-rows-fr md:grid-cols-2">
           <ContactCard
             icon={<Phone size={20} className="text-brand-teal" />}
             title="Телефон"
@@ -31,29 +75,31 @@ export default function Contacts() {
             icon={<Mail size={20} className="text-brand-teal" />}
             title="E-mail"
             value={SITE_CONTACTS.email}
-            subtitle="Для вопросов по заказам, товарам и консультациям"
+            subtitle="Для вопросов по заказам, товарам, записи и консультациям"
             href={`mailto:${SITE_CONTACTS.email}`}
           />
           <ContactCard
             icon={<MapPin size={20} className="text-brand-teal" />}
             title="Адрес"
-            value={SITE_CONTACTS.address}
-            subtitle="Самовывоз и консультации по предварительной связи"
+            value={`${SITE_CONTACTS.address}, Майкудук`}
+            subtitle="Самовывоз, консультации и запись по предварительной связи"
           />
           <ContactCard
             icon={<MessageCircle size={20} className="text-brand-teal" />}
             title="WhatsApp"
             value={SITE_CONTACTS.phoneDisplay}
             subtitle="Самый быстрый способ записаться или уточнить наличие"
-            href={buildWhatsAppLink('Здравствуйте! Хочу уточнить информацию по услугам и товарам ZhasaVet.')}
+            href={buildWhatsAppLink(
+              'Здравствуйте! Хочу уточнить информацию по услугам и товарам ZhasaVet.',
+            )}
           />
         </div>
 
         <div className="space-y-4 rounded-[32px] border border-slate-200 bg-white p-6 shadow-sm md:p-8">
           <h2 className="text-2xl font-display font-bold text-slate-900">Соцсети и маршрут</h2>
           <p className="leading-7 text-slate-500">
-            Подписывайтесь на наши обновления, чтобы видеть советы по уходу, сезонные рекомендации и
-            новинки каталога. Для записи и быстрых вопросов удобнее всего писать в WhatsApp.
+            Подписывайтесь на наши обновления, чтобы видеть советы по уходу, сезонные рекомендации
+            и новости каталога. Для записи и быстрых вопросов удобнее всего писать в WhatsApp.
           </p>
 
           <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
@@ -116,7 +162,7 @@ function ContactCard({
   href?: string;
 }) {
   const content = (
-    <div className="rounded-[28px] border border-slate-200 bg-white p-6 shadow-sm transition-colors hover:border-brand-teal/20">
+    <div className="flex h-full flex-col rounded-[28px] border border-slate-200 bg-white p-6 shadow-sm transition-colors hover:border-brand-teal/20">
       <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-2xl bg-brand-teal/10">
         {icon}
       </div>
@@ -131,7 +177,12 @@ function ContactCard({
   }
 
   return (
-    <a href={href} target={href.startsWith('http') ? '_blank' : undefined} rel="noreferrer">
+    <a
+      href={href}
+      target={href.startsWith('http') ? '_blank' : undefined}
+      rel="noreferrer"
+      className="block h-full"
+    >
       {content}
     </a>
   );

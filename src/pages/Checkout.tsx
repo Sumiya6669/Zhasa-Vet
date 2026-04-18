@@ -201,7 +201,11 @@ export default function Checkout() {
               <div className="space-y-4 max-h-[420px] overflow-y-auto pr-2 custom-scrollbar">
                 {cart.map((item) => (
                   <div key={item.id} className="flex gap-4">
-                    <img src={item.img} alt={item.name} className="w-16 h-16 rounded-2xl object-cover border border-slate-100" />
+                    <img
+                      src={item.img}
+                      alt={`${item.name} — товар ZhasaVet, Караганда`}
+                      className="w-16 h-16 rounded-2xl object-cover border border-slate-100"
+                    />
                     <div className="flex-1 min-w-0">
                       <div className="font-semibold text-sm text-slate-900 line-clamp-2">{item.name}</div>
                       <div className="text-xs text-slate-400 mt-1">Количество: {item.quantity}</div>

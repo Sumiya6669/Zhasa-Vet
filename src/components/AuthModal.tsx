@@ -74,7 +74,7 @@ export default function AuthModal({
         setSuccessMessage('Аккаунт создан. Теперь вы можете сразу войти в личный кабинет.');
       } else {
         setSuccessMessage(
-          'Регистрация завершена. Если для аккаунтов включено подтверждение почты, подтвердите email и затем войдите.',
+          'Регистрация завершена. Если включено подтверждение почты, подтвердите email и затем войдите.',
         );
       }
 
@@ -111,12 +111,12 @@ export default function AuthModal({
       >
         <button
           onClick={onClose}
-          className="absolute right-5 top-5 w-10 h-10 rounded-full bg-slate-100 text-slate-500 flex items-center justify-center hover:bg-slate-200 transition-colors"
+          className="absolute right-5 top-5 flex h-10 w-10 items-center justify-center rounded-full bg-slate-100 text-slate-500 transition-colors hover:bg-slate-200"
         >
           <X size={18} />
         </button>
 
-        <div className="p-8 md:p-10 space-y-8">
+        <div className="space-y-8 p-8 md:p-10">
           <div className="space-y-2 text-center">
             <h2 className="text-3xl font-display font-bold text-slate-900">
               {mode === 'login' ? 'Вход в аккаунт' : 'Создание аккаунта'}
@@ -157,13 +157,13 @@ export default function AuthModal({
 
           <form onSubmit={handleSubmit} className="space-y-5">
             <div className="space-y-2">
-              <label className="text-sm font-semibold text-slate-700">E-mail или логин</label>
+              <label className="text-sm font-semibold text-slate-700">E-mail</label>
               <input
                 type="text"
                 required
                 value={email}
                 onChange={(event) => setEmail(event.target.value)}
-                placeholder="example@mail.com или admin-zhasavet"
+                placeholder="example@mail.com"
                 className="w-full rounded-2xl border border-slate-200 bg-slate-50 px-5 py-4 outline-none transition focus:border-brand-teal focus:ring-2 focus:ring-brand-teal/15"
               />
             </div>
@@ -187,7 +187,7 @@ export default function AuthModal({
                   initial={{ opacity: 0, height: 0 }}
                   animate={{ opacity: 1, height: 'auto' }}
                   exit={{ opacity: 0, height: 0 }}
-                  className="rounded-2xl border border-red-100 bg-red-50 px-4 py-3 text-sm text-red-600 flex items-start gap-3"
+                  className="flex items-start gap-3 rounded-2xl border border-red-100 bg-red-50 px-4 py-3 text-sm text-red-600"
                 >
                   <AlertCircle size={18} className="mt-0.5 flex-shrink-0" />
                   <span>{error}</span>
@@ -199,7 +199,7 @@ export default function AuthModal({
                   initial={{ opacity: 0, height: 0 }}
                   animate={{ opacity: 1, height: 'auto' }}
                   exit={{ opacity: 0, height: 0 }}
-                  className="rounded-2xl border border-green-100 bg-green-50 px-4 py-3 text-sm text-green-700 flex items-start gap-3"
+                  className="flex items-start gap-3 rounded-2xl border border-green-100 bg-green-50 px-4 py-3 text-sm text-green-700"
                 >
                   <CheckCircle2 size={18} className="mt-0.5 flex-shrink-0" />
                   <span>{successMessage}</span>
@@ -210,7 +210,7 @@ export default function AuthModal({
             <button
               type="submit"
               disabled={loading}
-              className="w-full rounded-2xl bg-brand-teal py-4 text-white font-semibold shadow-lg shadow-brand-teal/20 hover:bg-brand-teal-dark transition-colors disabled:opacity-70 flex items-center justify-center gap-2"
+              className="flex w-full items-center justify-center gap-2 rounded-2xl bg-brand-teal py-4 font-semibold text-white shadow-lg shadow-brand-teal/20 transition-colors hover:bg-brand-teal-dark disabled:opacity-70"
             >
               {loading ? (
                 <Loader2 size={20} className="animate-spin" />
@@ -222,11 +222,6 @@ export default function AuthModal({
               )}
             </button>
           </form>
-
-          <div className="rounded-2xl bg-slate-50 border border-slate-100 px-4 py-3 text-xs text-slate-500 leading-5">
-            Для входа в админ-панель используйте e-mail <strong>admin@zhasavet.kz</strong> или
-            алиас <strong>admin-zhasavet</strong>.
-          </div>
         </div>
       </motion.div>
     </div>

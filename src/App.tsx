@@ -278,7 +278,7 @@ function Navbar({
         <Link to="/" className="flex items-center">
           <img
             src={LOGO_SRC}
-            alt="ZhasaVet"
+            alt="Логотип ZhasaVet — ветаптека и ветклиника в Караганде"
             className="h-14 w-auto object-contain"
             onError={(event) => {
               (event.target as HTMLImageElement).hidden = true;
@@ -476,7 +476,7 @@ function Footer() {
           <div className="flex items-center text-white">
             <img
               src={LOGO_SRC}
-              alt="ZhasaVet"
+              alt="Логотип ZhasaVet — ветаптека и ветклиника в Караганде"
               className="h-12 w-auto object-contain"
               onError={(event) => {
                 (event.target as HTMLImageElement).hidden = true;

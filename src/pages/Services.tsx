@@ -1,5 +1,6 @@
 import { motion } from 'motion/react';
 import { ArrowRight, Heart, MessageCircle, Microscope, Stethoscope, Syringe } from 'lucide-react';
+import Seo from '../components/Seo';
 import { MOCK_SERVICES, buildWhatsAppLink } from '../mockData';
 
 const icons = [Stethoscope, Syringe, Heart, Microscope];
@@ -7,17 +8,37 @@ const icons = [Stethoscope, Syringe, Heart, Microscope];
 export default function Services() {
   return (
     <div className="mx-auto max-w-7xl space-y-10 px-4 py-12 md:py-16">
+      <Seo
+        title="Ветклиника Караганда, Майкудук — приём, прививки, консультации"
+        description="Ветеринарная клиника ZhasaVet в Караганде, Майкудук: первичный приём, прививки собакам и кошкам, обработка от паразитов, консультации по питанию и профилактике."
+        keywords="ветклиника Караганда, ветеринарная клиника Майкудук, ветеринар Майкудук, прививки собакам кошкам Караганда, ветеринар Караганда услуги"
+        canonicalPath="/services"
+      />
+
       <div className="max-w-3xl space-y-4">
         <span className="inline-flex rounded-full bg-brand-teal/10 px-4 py-2 text-sm font-semibold text-brand-teal">
           Услуги
         </span>
         <h1 className="text-4xl font-display font-bold text-slate-900 md:text-5xl">
-          Практичные ветеринарные услуги без лишних обещаний
+          Ветеринарная клиника в Караганде для повседневной помощи и профилактики
         </h1>
         <p className="text-lg leading-8 text-slate-500">
-          Мы помогаем быстро понять, что происходит с питомцем, подобрать базовую тактику ухода и
-          вовремя направить на лечение. Если хотите записаться, отправьте сообщение прямо со
-          страницы, и мы свяжемся с вами.
+          В ZhasaVet можно записаться на приём к ветеринару в Майкудуке, сделать прививки собакам
+          и кошкам, подобрать профилактику от паразитов и получить понятную консультацию по уходу и
+          питанию. Мы работаем без лишней бюрократии и помогаем быстро перейти от вопроса к
+          конкретному решению.
+        </p>
+      </div>
+
+      <div className="rounded-[32px] border border-slate-200 bg-white p-6 shadow-sm md:p-8">
+        <h2 className="text-2xl font-display font-bold text-slate-900 md:text-3xl">
+          Какие услуги чаще всего ищут в ZhasaVet
+        </h2>
+        <p className="mt-4 text-base leading-8 text-slate-500 md:text-lg">
+          На этой странице собраны направления, по которым нас чаще находят в локальном поиске:
+          ветклиника Караганда, ветеринар Майкудук, прививки собакам и кошкам Караганда,
+          консультация по кормлению и сезонная защита от паразитов. Под каждой услугой можно сразу
+          отправить заявку в WhatsApp и согласовать удобное время.
         </p>
       </div>
 

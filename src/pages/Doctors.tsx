@@ -1,4 +1,5 @@
 import { Award, Calendar, GraduationCap, MessageCircle } from 'lucide-react';
+import Seo from '../components/Seo';
 import { MOCK_DOCTORS, buildWhatsAppLink } from '../mockData';
 
 export default function Doctors() {
@@ -6,22 +7,34 @@ export default function Doctors() {
 
   return (
     <div className="mx-auto max-w-7xl space-y-10 px-4 py-12 md:py-16">
+      <Seo
+        title="Ветеринар Яша Оржов — приём в Караганде, Майкудук"
+        description="Яша Оржов — ветеринарный врач ZhasaVet в Караганде, Майкудук. Приём, профилактика, консультации по терапии, вакцинации и домашнему уходу."
+        keywords="ветеринар Майкудук, ветеринар Караганда, Яша Оржов, ветеринарный врач Караганда"
+        canonicalPath="/doctors"
+      />
+
       <div className="max-w-3xl space-y-4">
         <span className="inline-flex rounded-full bg-brand-teal/10 px-4 py-2 text-sm font-semibold text-brand-teal">
           Врачи
         </span>
         <h1 className="text-4xl font-display font-bold text-slate-900 md:text-5xl">
-          Врач, которому можно доверить важные вопросы о питомце
+          Ветеринар в Караганде, которому можно доверить важные вопросы о питомце
         </h1>
         <p className="text-lg leading-8 text-slate-500">
           В ZhasaVet мы делаем ставку на спокойную диагностику, понятные объяснения и профилактику,
-          которая действительно помогает в повседневной жизни владельца.
+          которая действительно помогает в повседневной жизни владельца. Ниже — врач, который
+          ведёт приём и помогает выстроить понятный план действий без лишней тревоги.
         </p>
       </div>
 
       <section className="grid grid-cols-1 items-start gap-8 lg:grid-cols-[420px_minmax(0,1fr)]">
         <div className="overflow-hidden rounded-[36px] border border-slate-200 shadow-xl">
-          <img src={doctor.image_url} alt={doctor.name} className="h-full w-full object-cover" />
+          <img
+            src={doctor.image_url}
+            alt={`${doctor.name} — ветеринар ZhasaVet в Караганде`}
+            className="h-full w-full object-cover"
+          />
         </div>
 
         <div className="space-y-6">
@@ -40,7 +53,11 @@ export default function Doctors() {
           </div>
 
           <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
-            <InfoCard icon={<Award size={20} className="text-brand-teal" />} label="Опыт" value={doctor.experience} />
+            <InfoCard
+              icon={<Award size={20} className="text-brand-teal" />}
+              label="Опыт"
+              value={doctor.experience}
+            />
             <InfoCard
               icon={<GraduationCap size={20} className="text-brand-teal" />}
               label="Фокус"

@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { motion } from 'motion/react';
 import { ArrowRight, Calendar, Loader2, X } from 'lucide-react';
+import Seo from '../components/Seo';
 import { api } from '../lib/api';
 import { BlogPost } from '../types';
 
@@ -26,16 +27,23 @@ export default function Blog() {
 
   return (
     <div className="mx-auto max-w-7xl space-y-10 px-4 py-12 md:py-16">
+      <Seo
+        title="Блог ZhasaVet — советы ветеринара в Караганде"
+        description="Полезные материалы ZhasaVet о профилактике, питании, сезонном уходе и домашней аптечке для собак, кошек и других животных в Караганде."
+        keywords="ветеринарный блог Караганда, советы ветеринара Караганда, уход за животными Караганда, прививки собакам кошкам Караганда"
+        canonicalPath="/blog"
+      />
+
       <div className="max-w-3xl space-y-4">
         <span className="inline-flex rounded-full bg-brand-orange/10 px-4 py-2 text-sm font-semibold text-brand-orange">
           Полезные материалы
         </span>
         <h1 className="text-4xl font-display font-bold text-slate-900 md:text-5xl">
-          Блог ZhasaVet
+          Блог ZhasaVet о здоровье животных в Караганде
         </h1>
         <p className="text-lg leading-8 text-slate-500">
           Пишем о профилактике, домашнем уходе, питании и сезонных вопросах, с которыми чаще всего
-          сталкиваются владельцы кошек, собак и других животных.
+          сталкиваются владельцы кошек, собак и других животных в Караганде и Майкудуке.
         </p>
       </div>
 
@@ -56,7 +64,11 @@ export default function Blog() {
               className="cursor-pointer overflow-hidden rounded-[32px] border border-slate-200 bg-white shadow-sm transition-all hover:-translate-y-1 hover:border-brand-teal/20 hover:shadow-xl"
             >
               <div className="aspect-[16/9] overflow-hidden">
-                <img src={post.image_url} alt={post.title} className="h-full w-full object-cover" />
+                <img
+                  src={post.image_url}
+                  alt={`${post.title} — блог ZhasaVet, Караганда`}
+                  className="h-full w-full object-cover"
+                />
               </div>
               <div className="space-y-4 p-6">
                 <div className="inline-flex items-center gap-2 rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold text-slate-500">
@@ -64,7 +76,7 @@ export default function Blog() {
                   {post.date}
                 </div>
                 <h2 className="text-2xl font-display font-bold text-slate-900">{post.title}</h2>
-                <p className="line-clamp-4 text-slate-500 leading-7">{post.excerpt}</p>
+                <p className="line-clamp-4 leading-7 text-slate-500">{post.excerpt}</p>
                 <div className="inline-flex items-center gap-2 font-semibold text-brand-teal">
                   Читать статью
                   <ArrowRight size={16} />
@@ -85,7 +97,7 @@ export default function Blog() {
             <div className="relative aspect-[16/7] overflow-hidden">
               <img
                 src={selectedPost.image_url}
-                alt={selectedPost.title}
+                alt={`${selectedPost.title} — статья ZhasaVet`}
                 className="h-full w-full object-cover"
               />
               <button

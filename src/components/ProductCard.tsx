@@ -7,6 +7,7 @@ import { Product } from '../types';
 export default function ProductCard({ product }: { product: Product }) {
   const { addToCart } = useCart();
   const [copied, setCopied] = useState(false);
+  const productAlt = `${product.name} — ветеринарный товар ZhasaVet в Караганде`;
 
   const copyArticle = async () => {
     await navigator.clipboard.writeText(product.article);
@@ -19,7 +20,7 @@ export default function ProductCard({ product }: { product: Product }) {
       <div className="relative aspect-square overflow-hidden bg-slate-100">
         <img
           src={product.img}
-          alt={product.name}
+          alt={productAlt}
           className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
         />
         <span className={`absolute top-4 left-4 rounded-full px-3 py-1 text-[11px] font-semibold ${statusStyles(product.status)}`}>
