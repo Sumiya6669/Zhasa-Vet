@@ -68,7 +68,7 @@ export default function Checkout() {
           </div>
           <h1 className="text-3xl font-display font-bold text-slate-900">Заказ оформлен</h1>
           <p className="text-slate-500 leading-7 mt-4">
-            Заказ уже сохранён в Supabase. Мы свяжемся с вами для подтверждения наличия и времени
+            Заказ принят. Мы свяжемся с вами, чтобы подтвердить наличие товаров и удобное время
             самовывоза.
           </p>
           <div className="mt-6 rounded-3xl border border-slate-100 bg-slate-50 p-5 text-left text-sm text-slate-600">

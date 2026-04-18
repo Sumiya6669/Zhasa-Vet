@@ -32,82 +32,84 @@ export default function Home() {
         <img
           src="https://images.unsplash.com/photo-1576201836106-db1758fd1c97?q=80&w=1800&auto=format&fit=crop"
           alt="ZhasaVet"
-          className="absolute inset-0 w-full h-full object-cover"
+          className="absolute inset-0 h-full w-full object-cover"
         />
 
-        <div className="relative z-10 max-w-7xl mx-auto px-4 w-full">
+        <div className="relative z-10 mx-auto w-full max-w-7xl px-4">
           <motion.div
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7 }}
-            className="max-w-3xl text-white space-y-7"
+            className="max-w-3xl space-y-7 text-white"
           >
             <span className="inline-flex rounded-full bg-white/10 px-4 py-2 text-sm font-semibold backdrop-blur">
               Ветеринарная аптека и клиника в Караганде
             </span>
-            <h1 className="text-5xl md:text-7xl font-display font-bold leading-tight">
-              Всё для здоровья
+            <h1 className="text-5xl font-display font-bold leading-tight md:text-7xl">
+              Всё нужное для здоровья
               <br />
               <span className="text-brand-teal">вашего питомца</span>
             </h1>
-            <p className="max-w-2xl text-lg md:text-xl text-slate-200 leading-8">
-              Препараты, корма, консультации и удобный самовывоз. Витрина работает на Supabase и
-              готова к реальному запуску без локального сервера.
+            <p className="max-w-2xl text-lg leading-8 text-slate-200 md:text-xl">
+              Подбираем препараты, корма и товары для ухода, объясняем всё простыми словами и
+              помогаем оформить заказ без лишней суеты. ZhasaVet объединяет аптеку, консультации и
+              удобный самовывоз в одном месте.
             </p>
 
-            <div className="flex flex-col sm:flex-row gap-4">
+            <div className="flex flex-col gap-4 sm:flex-row">
               <Link
                 to="/pharmacy"
-                className="px-7 py-4 rounded-2xl bg-brand-teal text-white font-semibold shadow-xl shadow-brand-teal/20 hover:bg-brand-teal-dark transition-colors flex items-center justify-center gap-2"
+                className="flex items-center justify-center gap-2 rounded-2xl bg-brand-teal px-7 py-4 font-semibold text-white shadow-xl shadow-brand-teal/20 transition-colors hover:bg-brand-teal-dark"
               >
                 Перейти в аптеку
                 <ShoppingBag size={18} />
               </Link>
               <Link
-                to="/contacts"
-                className="px-7 py-4 rounded-2xl border border-white/20 bg-white/10 text-white font-semibold backdrop-blur hover:bg-white/15 transition-colors flex items-center justify-center"
+                to="/services"
+                className="flex items-center justify-center rounded-2xl border border-white/20 bg-white/10 px-7 py-4 font-semibold text-white backdrop-blur transition-colors hover:bg-white/15"
               >
-                Связаться с нами
+                Посмотреть услуги
               </Link>
             </div>
           </motion.div>
         </div>
       </section>
 
-      <section className="max-w-7xl mx-auto px-4 -mt-14 relative z-20">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <section className="relative z-20 mx-auto -mt-14 max-w-7xl px-4">
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
           <FeatureCard
             icon={<ShieldCheck size={28} className="text-brand-teal" />}
-            title="Проверенные препараты"
-            description="Каталог собирается из Supabase и показывает только актуальные позиции без моков и заглушек."
+            title="Подобранный ассортимент"
+            description="В каталоге собраны товары, которые действительно нужны для профилактики, лечения, ухода и спокойной домашней аптечки."
           />
           <FeatureCard
             icon={<Stethoscope size={28} className="text-brand-teal" />}
-            title="Практикующие специалисты"
-            description="Консультируем по товарам и уходу за животными, а не просто публикуем карточки товаров."
+            title="Понятные консультации"
+            description="Помогаем владельцам разобраться в базовом уходе, вакцинации, рационе и сезонной защите без сложных терминов."
           />
           <FeatureCard
             icon={<ShoppingBag size={28} className="text-brand-teal" />}
             title="Быстрый самовывоз"
-            description="Корзина и checkout работают напрямую через Supabase, поэтому заказы сразу попадают в админку."
+            description="Оформляйте заказ онлайн, а мы подготовим его к выдаче и заранее уточним удобное время получения."
           />
         </div>
       </section>
 
-      <section className="max-w-7xl mx-auto px-4 mt-24 space-y-10">
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
+      <section className="mx-auto mt-24 max-w-7xl space-y-10 px-4">
+        <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
           <div>
-            <h2 className="text-3xl md:text-4xl font-display font-bold text-slate-900">
+            <h2 className="text-3xl font-display font-bold text-slate-900 md:text-4xl">
               Популярные товары
             </h2>
-            <p className="text-slate-500 mt-2">
-              Блок заполняется товарами с флагом «показывать на главной».
+            <p className="mt-2 text-slate-500">
+              Позиции, которые чаще всего выбирают для базового ухода, профилактики и домашней
+              ветеринарной аптечки.
             </p>
           </div>
 
           <Link
             to="/pharmacy"
-            className="inline-flex items-center gap-2 text-brand-teal font-semibold hover:gap-3 transition-all"
+            className="inline-flex items-center gap-2 font-semibold text-brand-teal transition-all hover:gap-3"
           >
             Открыть весь каталог
             <ArrowRight size={18} />
@@ -115,25 +117,26 @@ export default function Home() {
         </div>
 
         {loading ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
             {Array.from({ length: 4 }).map((_, index) => (
               <div
                 key={index}
-                className="h-[380px] rounded-[32px] border border-slate-200 bg-white flex items-center justify-center"
+                className="flex h-[380px] items-center justify-center rounded-[32px] border border-slate-200 bg-white"
               >
                 <Loader2 size={24} className="animate-spin text-slate-300" />
               </div>
             ))}
           </div>
         ) : featuredProducts.length ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
             {featuredProducts.map((product) => (
               <ProductCard key={product.id} product={product} />
             ))}
           </div>
         ) : (
           <div className="rounded-[32px] border border-dashed border-slate-300 bg-white px-6 py-14 text-center text-slate-500">
-            На главной пока нет товаров. Добавьте несколько позиций в админ-панели или выполните сидирование базы.
+            Витрина сейчас обновляется. Популярные товары появятся здесь сразу после публикации в
+            каталоге.
           </div>
         )}
       </section>
@@ -152,11 +155,11 @@ function FeatureCard({
 }) {
   return (
     <div className="rounded-[28px] border border-slate-200 bg-white p-6 shadow-xl shadow-slate-200/40">
-      <div className="w-14 h-14 rounded-2xl bg-brand-teal/10 flex items-center justify-center mb-5">
+      <div className="mb-5 flex h-14 w-14 items-center justify-center rounded-2xl bg-brand-teal/10">
         {icon}
       </div>
       <h3 className="text-xl font-semibold text-slate-900">{title}</h3>
-      <p className="text-sm leading-6 text-slate-500 mt-3">{description}</p>
+      <p className="mt-3 text-sm leading-6 text-slate-500">{description}</p>
     </div>
   );
 }

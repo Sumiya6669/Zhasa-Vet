@@ -165,7 +165,7 @@ export default function AdminDashboard() {
             <div>
               <h1 className="text-2xl font-display font-bold text-slate-900">{tabTitle(activeTab)}</h1>
               <p className="text-sm text-slate-500">
-                Управляйте товарами, заказами и блогом напрямую через Supabase.
+                Управляйте товарами, заказами и публикациями из одной панели.
               </p>
             </div>
 

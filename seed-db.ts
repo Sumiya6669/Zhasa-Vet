@@ -1,5 +1,6 @@
 import dotenv from 'dotenv';
 import { createClient } from '@supabase/supabase-js';
+import { BLOG_CONTENT_OVERRIDES, PRODUCT_CONTENT_OVERRIDES } from './src/mockData';
 
 dotenv.config();
 dotenv.config({ path: '.env.local', override: true });
@@ -165,12 +166,22 @@ const blogPosts = [
   },
 ];
 
+const syncedProducts = products.map((product) => ({
+  ...product,
+  ...PRODUCT_CONTENT_OVERRIDES[product.article],
+}));
+
+const syncedBlogPosts = blogPosts.map((post) => ({
+  ...post,
+  ...BLOG_CONTENT_OVERRIDES[post.slug],
+}));
+
 async function seed() {
   console.log('Seeding products and blog posts...');
 
   const { error: productsError } = await supabase
     .from('products')
-    .upsert(products, { onConflict: 'article' });
+    .upsert(syncedProducts, { onConflict: 'article' });
 
   if (productsError) {
     throw productsError;
@@ -178,7 +189,7 @@ async function seed() {
 
   const { error: blogError } = await supabase
     .from('blog_posts')
-    .upsert(blogPosts, { onConflict: 'slug' });
+    .upsert(syncedBlogPosts, { onConflict: 'slug' });
 
   if (blogError) {
     throw blogError;

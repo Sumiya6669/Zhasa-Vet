@@ -1,4 +1,5 @@
 import { BlogPost, BlogPostInput, Order, Product, ProductInput } from '../types';
+import { BLOG_CONTENT_OVERRIDES, PRODUCT_CONTENT_OVERRIDES } from '../mockData';
 import { supabase } from './supabase';
 
 type DbRecord = { id: string | number; created_at?: string };
@@ -16,6 +17,28 @@ function unwrapError(message: string, error: { message?: string } | null) {
   }
 }
 
+function mergeProductContent(product: Product) {
+  if (!product.article) {
+    return product;
+  }
+
+  return {
+    ...product,
+    ...PRODUCT_CONTENT_OVERRIDES[product.article],
+  };
+}
+
+function mergeBlogContent(post: BlogPost) {
+  if (!post.slug) {
+    return post;
+  }
+
+  return {
+    ...post,
+    ...BLOG_CONTENT_OVERRIDES[post.slug],
+  };
+}
+
 export const api = {
   async getProducts(): Promise<Product[]> {
     const { data, error } = await supabase
@@ -24,7 +47,9 @@ export const api = {
       .order('created_at', { ascending: false });
 
     unwrapError('Failed to fetch products', error);
-    return (data ?? []).map((product: Product & DbRecord) => normalizeId(product));
+    return (data ?? [])
+      .map((product: Product & DbRecord) => normalizeId(product))
+      .map(mergeProductContent);
   },
 
   async createProduct(product: ProductInput): Promise<Product> {
@@ -35,7 +60,7 @@ export const api = {
       .single();
 
     unwrapError('Failed to create product', error);
-    return normalizeId(data as Product & DbRecord);
+    return mergeProductContent(normalizeId(data as Product & DbRecord));
   },
 
   async updateProduct(id: string, product: ProductInput): Promise<Product> {
@@ -47,7 +72,7 @@ export const api = {
       .single();
 
     unwrapError('Failed to update product', error);
-    return normalizeId(data as Product & DbRecord);
+    return mergeProductContent(normalizeId(data as Product & DbRecord));
   },
 
   async deleteProduct(id: string): Promise<void> {
@@ -82,7 +107,9 @@ export const api = {
       .order('created_at', { ascending: false });
 
     unwrapError('Failed to fetch blog posts', error);
-    return (data ?? []).map((post: BlogPost & DbRecord) => normalizeId(post));
+    return (data ?? [])
+      .map((post: BlogPost & DbRecord) => normalizeId(post))
+      .map(mergeBlogContent);
   },
 
   async createBlogPost(post: BlogPostInput): Promise<BlogPost> {
@@ -93,7 +120,7 @@ export const api = {
       .single();
 
     unwrapError('Failed to create blog post', error);
-    return normalizeId(data as BlogPost & DbRecord);
+    return mergeBlogContent(normalizeId(data as BlogPost & DbRecord));
   },
 
   async updateBlogPost(id: string, post: BlogPostInput): Promise<BlogPost> {
@@ -105,7 +132,7 @@ export const api = {
       .single();
 
     unwrapError('Failed to update blog post', error);
-    return normalizeId(data as BlogPost & DbRecord);
+    return mergeBlogContent(normalizeId(data as BlogPost & DbRecord));
   },
 
   async deleteBlogPost(id: string): Promise<void> {

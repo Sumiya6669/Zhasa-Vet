@@ -57,7 +57,7 @@ export default function AdminLogin() {
           </div>
           <h1 className="text-3xl font-display font-bold">Админ-панель</h1>
           <p className="text-sm text-slate-300 mt-2">
-            Войдите под админ-аккаунтом Supabase, чтобы управлять товарами, блогом и заказами.
+            Войдите под администраторским аккаунтом, чтобы управлять товарами, блогом и заказами.
           </p>
         </div>
 
@@ -98,7 +98,7 @@ export default function AdminLogin() {
                   required
                   value={password}
                   onChange={(event) => setPassword(event.target.value)}
-                  placeholder="Пароль из .env.local"
+                  placeholder="Введите пароль администратора"
                   className="w-full rounded-2xl border border-slate-200 bg-slate-50 pl-12 pr-5 py-4 outline-none transition focus:border-slate-900 focus:ring-2 focus:ring-slate-900/10"
                 />
               </div>

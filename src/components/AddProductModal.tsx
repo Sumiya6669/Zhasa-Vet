@@ -110,7 +110,7 @@ export default function AddProductModal({
               {initialProduct ? 'Редактирование товара' : 'Новый товар'}
             </h2>
             <p className="text-sm text-slate-500 mt-1">
-              Все изменения сохраняются прямо в Supabase и сразу отражаются на сайте.
+              Изменения сразу появляются в каталоге и становятся доступны на сайте после сохранения.
             </p>
           </div>
           <button

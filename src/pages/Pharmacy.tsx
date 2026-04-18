@@ -192,7 +192,7 @@ export default function Pharmacy() {
           <div>
             <h1 className="text-3xl md:text-4xl font-display font-bold text-slate-900">Аптека</h1>
             <p className="text-slate-500 mt-2">
-              Каталог загружается из Supabase и фильтруется на клиенте без дополнительных API.
+              Подберите препараты, корма и товары для ухода с помощью удобных фильтров по категории и типу животного.
             </p>
           </div>
           <div className="text-sm text-slate-400">
@@ -203,7 +203,7 @@ export default function Pharmacy() {
         {loading ? (
           <div className="rounded-[32px] border border-slate-200 bg-white py-24 flex flex-col items-center justify-center gap-4">
             <Loader2 size={32} className="animate-spin text-brand-teal" />
-            <div className="text-slate-500">Загружаем товары из Supabase...</div>
+            <div className="text-slate-500">Загружаем каталог...</div>
           </div>
         ) : filteredProducts.length ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6">

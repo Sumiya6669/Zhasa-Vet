@@ -1,12 +1,12 @@
 import { Suspense, createContext, lazy, useContext, useEffect, useState } from 'react';
 import { AnimatePresence, motion } from 'motion/react';
 import {
-  Facebook,
   Instagram,
   Loader2,
   LogOut,
   MapPin,
   Menu,
+  MessageCircle,
   Phone,
   Settings,
   ShoppingCart,
@@ -16,7 +16,9 @@ import {
 import { BrowserRouter, Link, Navigate, Route, Routes, useLocation } from 'react-router-dom';
 import { AuthChangeEvent, Session, User } from '@supabase/supabase-js';
 import AuthModal from './components/AuthModal';
+import TikTokIcon from './components/TikTokIcon';
 import { isAdminEmail } from './lib/auth';
+import { SITE_CONTACTS, buildWhatsAppLink } from './mockData';
 import { supabase } from './lib/supabase';
 import { CartItem, Product } from './types';
 
@@ -74,7 +76,7 @@ function AdminGuard({ children }: { children: React.ReactNode }) {
 
   if (authLoading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-slate-50">
+      <div className="flex min-h-screen items-center justify-center bg-slate-50">
         <Loader2 size={32} className="animate-spin text-brand-teal" />
       </div>
     );
@@ -204,7 +206,7 @@ function AppShell({
   }, [location.pathname]);
 
   return (
-    <div className="min-h-screen flex flex-col font-sans bg-slate-50 text-slate-900">
+    <div className="flex min-h-screen flex-col bg-slate-50 font-sans text-slate-900">
       {!isDashboardRoute && (
         <Navbar isMenuOpen={isMenuOpen} setIsMenuOpen={setIsMenuOpen} cartCount={cart.length} />
       )}
@@ -271,28 +273,27 @@ function Navbar({
 
   return (
     <nav className="fixed inset-x-0 top-0 z-50 border-b border-white/60 bg-white/85 backdrop-blur-xl">
-      <div className="max-w-7xl mx-auto px-4 h-20 flex items-center justify-between">
-        <Link to="/" className="flex items-center gap-3">
+      <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-4">
+        <Link to="/" className="flex items-center">
           <img
             src="/logo.svg"
             alt="ZhasaVet"
-            className="h-12 w-auto object-contain"
+            className="h-14 w-auto object-contain"
             onError={(event) => {
               (event.target as HTMLImageElement).hidden = true;
             }}
           />
-          <span className="font-display text-2xl font-bold tracking-tight text-slate-900">
-            Zhasa<span className="text-brand-teal">Vet</span>
-          </span>
         </Link>
 
-        <div className="hidden lg:flex items-center gap-8">
+        <div className="hidden items-center gap-8 lg:flex">
           {links.map((link) => (
             <Link
               key={link.path}
               to={link.path}
               className={`text-sm font-semibold transition-colors ${
-                location.pathname === link.path ? 'text-brand-teal' : 'text-slate-600 hover:text-brand-teal'
+                location.pathname === link.path
+                  ? 'text-brand-teal'
+                  : 'text-slate-600 hover:text-brand-teal'
               }`}
             >
               {link.name}
@@ -300,14 +301,14 @@ function Navbar({
           ))}
         </div>
 
-        <div className="hidden md:flex items-center gap-3">
+        <div className="hidden items-center gap-3 md:flex">
           <Link
             to="/checkout"
-            className="relative w-11 h-11 rounded-2xl border border-slate-200 bg-white flex items-center justify-center text-slate-600 hover:text-brand-teal hover:border-brand-teal/20 transition-colors"
+            className="relative flex h-11 w-11 items-center justify-center rounded-2xl border border-slate-200 bg-white text-slate-600 transition-colors hover:border-brand-teal/20 hover:text-brand-teal"
           >
             <ShoppingCart size={20} />
             {cartCount > 0 && (
-              <span className="absolute -top-1 -right-1 min-w-5 h-5 px-1 rounded-full bg-brand-orange text-white text-[10px] font-bold flex items-center justify-center">
+              <span className="absolute -right-1 -top-1 flex h-5 min-w-5 items-center justify-center rounded-full bg-brand-orange px-1 text-[10px] font-bold text-white">
                 {cartCount}
               </span>
             )}
@@ -317,7 +318,7 @@ function Navbar({
             <div className="relative">
               <button
                 onClick={() => setShowProfileMenu((prev) => !prev)}
-                className="flex items-center gap-2 px-4 py-2.5 rounded-2xl border border-slate-200 bg-white text-sm font-semibold text-slate-700 hover:border-brand-teal/20 hover:text-brand-teal transition-colors"
+                className="flex items-center gap-2 rounded-2xl border border-slate-200 bg-white px-4 py-2.5 text-sm font-semibold text-slate-700 transition-colors hover:border-brand-teal/20 hover:text-brand-teal"
               >
                 <UserIcon size={18} />
                 <span className="max-w-[160px] truncate">
@@ -331,7 +332,7 @@ function Navbar({
                     initial={{ opacity: 0, y: 8 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: 8 }}
-                    className="absolute right-0 mt-3 w-64 rounded-3xl border border-slate-200 bg-white shadow-2xl overflow-hidden"
+                    className="absolute right-0 mt-3 w-64 overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-2xl"
                   >
                     {isAdmin && (
                       <Link
@@ -347,7 +348,7 @@ function Navbar({
                         void signOut();
                         setShowProfileMenu(false);
                       }}
-                      className="w-full flex items-center gap-3 px-5 py-4 text-sm font-medium text-red-600 hover:bg-red-50"
+                      className="flex w-full items-center gap-3 px-5 py-4 text-sm font-medium text-red-600 hover:bg-red-50"
                     >
                       <LogOut size={16} />
                       Выйти
@@ -360,13 +361,13 @@ function Navbar({
             <>
               <button
                 onClick={() => openAuth('login')}
-                className="px-4 py-2.5 text-sm font-semibold text-slate-600 hover:text-brand-teal transition-colors"
+                className="px-4 py-2.5 text-sm font-semibold text-slate-600 transition-colors hover:text-brand-teal"
               >
                 Вход
               </button>
               <button
                 onClick={() => openAuth('register')}
-                className="px-5 py-2.5 rounded-2xl bg-brand-teal text-white text-sm font-semibold shadow-lg shadow-brand-teal/20 hover:bg-brand-teal-dark transition-colors"
+                className="rounded-2xl bg-brand-teal px-5 py-2.5 text-sm font-semibold text-white shadow-lg shadow-brand-teal/20 transition-colors hover:bg-brand-teal-dark"
               >
                 Регистрация
               </button>
@@ -374,18 +375,21 @@ function Navbar({
           )}
         </div>
 
-        <div className="flex md:hidden items-center gap-3">
-          <Link to="/checkout" className="relative w-11 h-11 rounded-2xl border border-slate-200 bg-white flex items-center justify-center text-slate-600">
+        <div className="flex items-center gap-3 md:hidden">
+          <Link
+            to="/checkout"
+            className="relative flex h-11 w-11 items-center justify-center rounded-2xl border border-slate-200 bg-white text-slate-600"
+          >
             <ShoppingCart size={20} />
             {cartCount > 0 && (
-              <span className="absolute -top-1 -right-1 min-w-5 h-5 px-1 rounded-full bg-brand-orange text-white text-[10px] font-bold flex items-center justify-center">
+              <span className="absolute -right-1 -top-1 flex h-5 min-w-5 items-center justify-center rounded-full bg-brand-orange px-1 text-[10px] font-bold text-white">
                 {cartCount}
               </span>
             )}
           </Link>
           <button
             onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="w-11 h-11 rounded-2xl border border-slate-200 bg-white flex items-center justify-center text-slate-700"
+            className="flex h-11 w-11 items-center justify-center rounded-2xl border border-slate-200 bg-white text-slate-700"
           >
             {isMenuOpen ? <X size={20} /> : <Menu size={20} />}
           </button>
@@ -398,15 +402,15 @@ function Navbar({
             initial={{ opacity: 0, y: -12 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -12 }}
-            className="md:hidden border-t border-slate-200 bg-white"
+            className="border-t border-slate-200 bg-white md:hidden"
           >
-            <div className="max-w-7xl mx-auto px-4 py-4 flex flex-col gap-2">
+            <div className="mx-auto flex max-w-7xl flex-col gap-2 px-4 py-4">
               {links.map((link) => (
                 <Link
                   key={link.path}
                   to={link.path}
                   onClick={() => setIsMenuOpen(false)}
-                  className="px-4 py-3 rounded-2xl text-sm font-semibold text-slate-700 hover:bg-slate-50"
+                  className="rounded-2xl px-4 py-3 text-sm font-semibold text-slate-700 hover:bg-slate-50"
                 >
                   {link.name}
                 </Link>
@@ -418,7 +422,7 @@ function Navbar({
                     <Link
                       to="/admin/dashboard"
                       onClick={() => setIsMenuOpen(false)}
-                      className="px-4 py-3 rounded-2xl text-sm font-semibold text-brand-teal hover:bg-brand-teal/5"
+                      className="rounded-2xl px-4 py-3 text-sm font-semibold text-brand-teal hover:bg-brand-teal/5"
                     >
                       Панель управления
                     </Link>
@@ -428,7 +432,7 @@ function Navbar({
                       void signOut();
                       setIsMenuOpen(false);
                     }}
-                    className="px-4 py-3 rounded-2xl text-sm font-semibold text-left text-red-600 hover:bg-red-50"
+                    className="rounded-2xl px-4 py-3 text-left text-sm font-semibold text-red-600 hover:bg-red-50"
                   >
                     Выйти
                   </button>
@@ -440,7 +444,7 @@ function Navbar({
                       openAuth('login');
                       setIsMenuOpen(false);
                     }}
-                    className="py-3 rounded-2xl bg-slate-100 text-sm font-semibold text-slate-700"
+                    className="rounded-2xl bg-slate-100 py-3 text-sm font-semibold text-slate-700"
                   >
                     Вход
                   </button>
@@ -449,7 +453,7 @@ function Navbar({
                       openAuth('register');
                       setIsMenuOpen(false);
                     }}
-                    className="py-3 rounded-2xl bg-brand-teal text-sm font-semibold text-white"
+                    className="rounded-2xl bg-brand-teal py-3 text-sm font-semibold text-white"
                   >
                     Регистрация
                   </button>
@@ -466,28 +470,26 @@ function Navbar({
 function Footer() {
   return (
     <footer className="bg-slate-950 text-slate-400">
-      <div className="max-w-7xl mx-auto px-4 py-14 grid grid-cols-1 md:grid-cols-4 gap-10">
+      <div className="mx-auto grid max-w-7xl grid-cols-1 gap-10 px-4 py-14 md:grid-cols-4">
         <div className="space-y-4">
-          <div className="flex items-center gap-3 text-white">
+          <div className="flex items-center text-white">
             <img
               src="/logo.svg"
               alt="ZhasaVet"
-              className="h-10 w-auto object-contain brightness-0 invert"
+              className="h-12 w-auto object-contain"
               onError={(event) => {
                 (event.target as HTMLImageElement).hidden = true;
               }}
             />
-            <span className="font-display text-xl font-bold">
-              Zhasa<span className="text-brand-teal">Vet</span>
-            </span>
           </div>
           <p className="text-sm leading-6">
-            Ветеринарная аптека и клиника в Караганде. Товары, консультации и удобный самовывоз в одном месте.
+            Ветеринарная аптека и клиника в Караганде. Товары для ухода, консультации, запись на
+            услуги и удобный самовывоз в одном месте.
           </p>
         </div>
 
         <div>
-          <h4 className="text-white font-semibold mb-4">Разделы</h4>
+          <h4 className="mb-4 font-semibold text-white">Разделы</h4>
           <div className="space-y-2 text-sm">
             <Link to="/pharmacy" className="block hover:text-brand-teal">
               Аптека
@@ -505,44 +507,57 @@ function Footer() {
         </div>
 
         <div>
-          <h4 className="text-white font-semibold mb-4">Контакты</h4>
+          <h4 className="mb-4 font-semibold text-white">Контакты</h4>
           <div className="space-y-3 text-sm">
             <div className="flex items-center gap-2">
               <Phone size={16} className="text-brand-teal" />
-              <span>+7 (707) 123-45-67</span>
+              <a href={`tel:${SITE_CONTACTS.phoneRaw}`} className="hover:text-brand-teal">
+                {SITE_CONTACTS.phoneDisplay}
+              </a>
             </div>
             <div className="flex items-start gap-2">
-              <MapPin size={16} className="text-brand-teal mt-1 flex-shrink-0" />
-              <span>Караганда, ул. Сталелитейная, 3/3А</span>
+              <MapPin size={16} className="mt-1 flex-shrink-0 text-brand-teal" />
+              <span>{SITE_CONTACTS.address}</span>
             </div>
           </div>
         </div>
 
         <div>
-          <h4 className="text-white font-semibold mb-4">Соцсети</h4>
+          <h4 className="mb-4 font-semibold text-white">Соцсети</h4>
           <div className="flex gap-3">
             <a
-              href="https://www.instagram.com"
+              href={SITE_CONTACTS.instagramUrl}
               target="_blank"
               rel="noreferrer"
-              className="w-10 h-10 rounded-2xl bg-slate-800 flex items-center justify-center hover:bg-brand-teal transition-colors"
+              className="flex h-10 w-10 items-center justify-center rounded-2xl bg-slate-800 transition-colors hover:bg-brand-teal"
+              aria-label="Instagram"
             >
               <Instagram size={18} className="text-white" />
             </a>
             <a
-              href="https://www.facebook.com"
+              href={SITE_CONTACTS.tiktokUrl}
               target="_blank"
               rel="noreferrer"
-              className="w-10 h-10 rounded-2xl bg-slate-800 flex items-center justify-center hover:bg-brand-teal transition-colors"
+              className="flex h-10 w-10 items-center justify-center rounded-2xl bg-slate-800 transition-colors hover:bg-brand-teal"
+              aria-label="TikTok"
             >
-              <Facebook size={18} className="text-white" />
+              <TikTokIcon className="h-[18px] w-[18px] text-white" />
+            </a>
+            <a
+              href={buildWhatsAppLink('Здравствуйте! Хочу связаться с ZhasaVet.')}
+              target="_blank"
+              rel="noreferrer"
+              className="flex h-10 w-10 items-center justify-center rounded-2xl bg-slate-800 transition-colors hover:bg-brand-teal"
+              aria-label="WhatsApp"
+            >
+              <MessageCircle size={18} className="text-white" />
             </a>
           </div>
         </div>
       </div>
 
       <div className="border-t border-slate-800">
-        <div className="max-w-7xl mx-auto px-4 py-5 text-xs text-center">
+        <div className="mx-auto max-w-7xl px-4 py-5 text-center text-xs">
           © 2026 ZhasaVet. Все права защищены.
         </div>
       </div>
@@ -552,7 +567,7 @@ function Footer() {
 
 function RouteLoader() {
   return (
-    <div className="min-h-[60vh] flex items-center justify-center">
+    <div className="flex min-h-[60vh] items-center justify-center">
       <Loader2 size={30} className="animate-spin text-brand-teal" />
     </div>
   );

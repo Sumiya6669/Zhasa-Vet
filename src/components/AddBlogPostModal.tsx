@@ -85,7 +85,7 @@ export default function AddBlogPostModal({
               {initialPost ? 'Редактирование статьи' : 'Новая статья'}
             </h2>
             <p className="text-sm text-slate-500 mt-1">
-              Публикация сохраняется в Supabase и сразу отображается в блоге.
+              После сохранения статья сразу появится в блоге и будет доступна посетителям сайта.
             </p>
           </div>
           <button
