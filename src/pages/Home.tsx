@@ -89,7 +89,7 @@ export default function Home() {
             className="max-w-3xl space-y-7 text-white"
           >
             <span className="inline-flex rounded-full bg-white/10 px-4 py-2 text-sm font-semibold backdrop-blur">
-              Ветаптека Караганда и ветклиника Майкудук
+              ВетАптека и ВетКлиника В Караганде (Майкудук)
             </span>
             <h1 className="text-5xl font-display font-bold leading-tight md:text-7xl">
               Лекарства для животных, корма и ветеринарная помощь
