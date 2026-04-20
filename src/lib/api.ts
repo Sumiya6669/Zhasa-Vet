@@ -3,6 +3,7 @@ import { BLOG_CONTENT_OVERRIDES, PRODUCT_CONTENT_OVERRIDES } from '../mockData';
 import { supabase } from './supabase';
 
 type DbRecord = { id: string | number; created_at?: string };
+const PRODUCT_IMAGE_BUCKET = 'product-images';
 
 function normalizeId<T extends DbRecord>(record: T) {
   return {
@@ -39,6 +40,21 @@ function mergeBlogContent(post: BlogPost) {
   };
 }
 
+function getFileExtension(fileName: string) {
+  const sanitizedName = fileName.split('?')[0];
+  const extension = sanitizedName.includes('.') ? sanitizedName.split('.').pop() : 'jpg';
+  return extension || 'jpg';
+}
+
+function createStoragePath(file: File) {
+  const uniqueId =
+    typeof crypto !== 'undefined' && 'randomUUID' in crypto
+      ? crypto.randomUUID()
+      : `${Date.now()}-${Math.round(Math.random() * 1_000_000)}`;
+
+  return `products/${uniqueId}.${getFileExtension(file.name)}`;
+}
+
 export const api = {
   async getProducts(): Promise<Product[]> {
     const { data, error } = await supabase
@@ -73,6 +89,30 @@ export const api = {
 
     unwrapError('Failed to update product', error);
     return mergeProductContent(normalizeId(data as Product & DbRecord));
+  },
+
+  async uploadProductImage(file: File): Promise<string> {
+    const storagePath = createStoragePath(file);
+    const { error } = await supabase.storage.from(PRODUCT_IMAGE_BUCKET).upload(storagePath, file, {
+      cacheControl: '3600',
+      upsert: false,
+      contentType: file.type || undefined,
+    });
+
+    if (error) {
+      throw new Error(
+        error.message ||
+          'Failed to upload product image. Make sure product-images bucket exists in Supabase Storage.',
+      );
+    }
+
+    const { data } = supabase.storage.from(PRODUCT_IMAGE_BUCKET).getPublicUrl(storagePath);
+
+    if (!data?.publicUrl) {
+      throw new Error('Failed to get public URL for product image.');
+    }
+
+    return data.publicUrl;
   },
 
   async deleteProduct(id: string): Promise<void> {
