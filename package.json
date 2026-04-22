@@ -9,6 +9,7 @@
     "preview": "vite preview",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "create-admin": "node scripts/create-admin.mjs",
+    "create-storage": "node scripts/create-storage-bucket.mjs",
     "seed": "tsx seed-db.ts"
   },
   "dependencies": {

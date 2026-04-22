@@ -3,7 +3,6 @@ import { BLOG_CONTENT_OVERRIDES, PRODUCT_CONTENT_OVERRIDES } from '../mockData';
 import { supabase } from './supabase';
 
 type DbRecord = { id: string | number; created_at?: string };
-const PRODUCT_IMAGE_BUCKET = 'product-images';
 
 function normalizeId<T extends DbRecord>(record: T) {
   return {
@@ -38,21 +37,6 @@ function mergeBlogContent(post: BlogPost) {
     ...post,
     ...BLOG_CONTENT_OVERRIDES[post.slug],
   };
-}
-
-function getFileExtension(fileName: string) {
-  const sanitizedName = fileName.split('?')[0];
-  const extension = sanitizedName.includes('.') ? sanitizedName.split('.').pop() : 'jpg';
-  return extension || 'jpg';
-}
-
-function createStoragePath(file: File) {
-  const uniqueId =
-    typeof crypto !== 'undefined' && 'randomUUID' in crypto
-      ? crypto.randomUUID()
-      : `${Date.now()}-${Math.round(Math.random() * 1_000_000)}`;
-
-  return `products/${uniqueId}.${getFileExtension(file.name)}`;
 }
 
 export const api = {
@@ -92,27 +76,44 @@ export const api = {
   },
 
   async uploadProductImage(file: File): Promise<string> {
-    const storagePath = createStoragePath(file);
-    const { error } = await supabase.storage.from(PRODUCT_IMAGE_BUCKET).upload(storagePath, file, {
-      cacheControl: '3600',
-      upsert: false,
-      contentType: file.type || undefined,
+    const base64Data = await file.arrayBuffer().then((buffer) => {
+      let binary = '';
+      const bytes = new Uint8Array(buffer);
+
+      for (let index = 0; index < bytes.length; index += 1) {
+        binary += String.fromCharCode(bytes[index]);
+      }
+
+      return btoa(binary);
     });
 
-    if (error) {
+    const response = await fetch('/api/upload-product-image', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        fileName: file.name,
+        contentType: file.type,
+        base64Data,
+      }),
+    });
+
+    let payload: { imageUrl?: string; error?: string } = {};
+
+    try {
+      payload = (await response.json()) as { imageUrl?: string; error?: string };
+    } catch {
+      payload = {};
+    }
+
+    if (!response.ok || !payload.imageUrl) {
       throw new Error(
-        error.message ||
-          'Failed to upload product image. Make sure product-images bucket exists in Supabase Storage.',
+        payload.error || 'Failed to upload product image to Supabase Storage.',
       );
     }
 
-    const { data } = supabase.storage.from(PRODUCT_IMAGE_BUCKET).getPublicUrl(storagePath);
-
-    if (!data?.publicUrl) {
-      throw new Error('Failed to get public URL for product image.');
-    }
-
-    return data.publicUrl;
+    return payload.imageUrl;
   },
 
   async deleteProduct(id: string): Promise<void> {

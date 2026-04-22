@@ -126,12 +126,32 @@ values ('product-images', 'product-images', true)
 on conflict (id) do update
 set public = excluded.public;
 
+alter table storage.buckets enable row level security;
 alter table storage.objects enable row level security;
 
+drop policy if exists "product_image_buckets_admin_select" on storage.buckets;
+drop policy if exists "product_image_buckets_admin_insert" on storage.buckets;
+drop policy if exists "product_image_buckets_admin_update" on storage.buckets;
 drop policy if exists "product_images_public_read" on storage.objects;
 drop policy if exists "product_images_admin_insert" on storage.objects;
 drop policy if exists "product_images_admin_update" on storage.objects;
 drop policy if exists "product_images_admin_delete" on storage.objects;
+
+create policy "product_image_buckets_admin_select"
+on storage.buckets
+for select
+using ((auth.jwt() ->> 'email') = 'admin@zhasavet.kz');
+
+create policy "product_image_buckets_admin_insert"
+on storage.buckets
+for insert
+with check ((auth.jwt() ->> 'email') = 'admin@zhasavet.kz');
+
+create policy "product_image_buckets_admin_update"
+on storage.buckets
+for update
+using ((auth.jwt() ->> 'email') = 'admin@zhasavet.kz')
+with check ((auth.jwt() ->> 'email') = 'admin@zhasavet.kz');
 
 create policy "product_images_public_read"
 on storage.objects

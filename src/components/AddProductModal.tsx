@@ -97,10 +97,7 @@ export default function AddProductModal({
       setFormData((prev) => ({ ...prev, img: imageUrl }));
       setUploadedFileName(file.name);
     } catch (err: any) {
-      alert(
-        err.message ||
-          'Не удалось загрузить изображение. Проверьте bucket product-images в Supabase Storage.',
-      );
+      alert(err.message || 'Не удалось загрузить изображение товара.');
     } finally {
       setUploadingImage(false);
       event.target.value = '';

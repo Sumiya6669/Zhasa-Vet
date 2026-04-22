@@ -28,6 +28,11 @@ export const supabase = (supabaseUrl && supabaseUrl.startsWith('http') && !hasSe
         }
         if (prop === 'storage') {
           return {
+            createBucket: () =>
+              Promise.resolve({
+                data: null,
+                error: new Error('Supabase not configured'),
+              }),
             from: () => ({
               upload: () =>
                 Promise.resolve({
