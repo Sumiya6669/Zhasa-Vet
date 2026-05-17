@@ -28,15 +28,17 @@ const homeSchema = {
   openingHoursSpecification: [
     {
       '@type': 'OpeningHoursSpecification',
-      dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
+      dayOfWeek: [
+        'Monday',
+        'Tuesday',
+        'Wednesday',
+        'Thursday',
+        'Friday',
+        'Saturday',
+        'Sunday',
+      ],
       opens: '09:00',
-      closes: '19:00',
-    },
-    {
-      '@type': 'OpeningHoursSpecification',
-      dayOfWeek: ['Sunday'],
-      opens: '09:00',
-      closes: '15:00',
+      closes: '21:00',
     },
   ],
   sameAs: [SITE_CONTACTS.instagramUrl, SITE_CONTACTS.tiktokUrl, SITE_CONTACTS.whatsappUrl],
@@ -98,7 +100,7 @@ export default function Home() {
               ZhasaVet — ветеринарная аптека и клиника в Майкудуке, где можно купить лекарства
               для животных, корм для собак и кошек, товары для КРС и МРС, а также записаться на
               приём, вакцинацию и консультацию. Мы находимся по адресу {SITE_CONTACTS.address} и
-              работаем {SITE_CONTACTS.hours}.
+              работаем {SITE_CONTACTS.hours.toLowerCase()}.
             </p>
 
             <div className="flex flex-col gap-4 sm:flex-row">

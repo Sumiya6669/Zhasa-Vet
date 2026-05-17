@@ -75,47 +75,6 @@ export const api = {
     return mergeProductContent(normalizeId(data as Product & DbRecord));
   },
 
-  async uploadProductImage(file: File): Promise<string> {
-    const base64Data = await file.arrayBuffer().then((buffer) => {
-      let binary = '';
-      const bytes = new Uint8Array(buffer);
-
-      for (let index = 0; index < bytes.length; index += 1) {
-        binary += String.fromCharCode(bytes[index]);
-      }
-
-      return btoa(binary);
-    });
-
-    const response = await fetch('/api/upload-product-image', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        fileName: file.name,
-        contentType: file.type,
-        base64Data,
-      }),
-    });
-
-    let payload: { imageUrl?: string; error?: string } = {};
-
-    try {
-      payload = (await response.json()) as { imageUrl?: string; error?: string };
-    } catch {
-      payload = {};
-    }
-
-    if (!response.ok || !payload.imageUrl) {
-      throw new Error(
-        payload.error || 'Failed to upload product image to Supabase Storage.',
-      );
-    }
-
-    return payload.imageUrl;
-  },
-
   async deleteProduct(id: string): Promise<void> {
     const { error } = await supabase.from('products').delete().eq('id', id);
     unwrapError('Failed to delete product', error);

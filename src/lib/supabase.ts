@@ -26,25 +26,6 @@ export const supabase = (supabaseUrl && supabaseUrl.startsWith('http') && !hasSe
             getUser: () => Promise.resolve({ data: { user: null } }),
           };
         }
-        if (prop === 'storage') {
-          return {
-            createBucket: () =>
-              Promise.resolve({
-                data: null,
-                error: new Error('Supabase not configured'),
-              }),
-            from: () => ({
-              upload: () =>
-                Promise.resolve({
-                  data: null,
-                  error: new Error('Supabase not configured'),
-                }),
-              getPublicUrl: () => ({
-                data: { publicUrl: '' },
-              }),
-            }),
-          };
-        }
         console.warn(
           hasSecretSupabaseKey
             ? 'Supabase is blocked because VITE_SUPABASE_ANON_KEY contains a secret key. Use the public anon key.'

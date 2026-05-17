@@ -1,7 +1,6 @@
 import { Suspense, createContext, lazy, useContext, useEffect, useState } from 'react';
 import { AnimatePresence, motion } from 'motion/react';
 import {
-  Clock3,
   Instagram,
   Loader2,
   LogOut,
@@ -304,11 +303,6 @@ function Navbar({
         </div>
 
         <div className="hidden items-center gap-3 md:flex">
-          <div className="hidden max-w-[240px] text-right text-[11px] leading-4 text-slate-500 xl:flex xl:flex-col">
-            <span>{SITE_CONTACTS.hoursWeekdays}</span>
-            <span>{SITE_CONTACTS.hoursSunday}</span>
-          </div>
-
           <Link
             to="/checkout"
             className="relative flex h-11 w-11 items-center justify-center rounded-2xl border border-slate-200 bg-white text-slate-600 transition-colors hover:border-brand-teal/20 hover:text-brand-teal"
@@ -466,11 +460,6 @@ function Navbar({
                   </button>
                 </div>
               )}
-
-              <div className="rounded-2xl bg-slate-50 px-4 py-3 text-sm text-slate-600">
-                <div>{SITE_CONTACTS.hoursWeekdays}</div>
-                <div className="mt-1">{SITE_CONTACTS.hoursSunday}</div>
-              </div>
             </div>
           </motion.div>
         )}
@@ -530,13 +519,6 @@ function Footer() {
             <div className="flex items-start gap-2">
               <MapPin size={16} className="mt-1 flex-shrink-0 text-brand-teal" />
               <span>{SITE_CONTACTS.address}</span>
-            </div>
-            <div className="flex items-start gap-2">
-              <Clock3 size={16} className="mt-1 flex-shrink-0 text-brand-teal" />
-              <div>
-                <div>{SITE_CONTACTS.hoursWeekdays}</div>
-                <div className="mt-1">{SITE_CONTACTS.hoursSunday}</div>
-              </div>
             </div>
           </div>
         </div>

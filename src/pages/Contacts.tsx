@@ -22,15 +22,17 @@ const contactsSchema = {
   openingHoursSpecification: [
     {
       '@type': 'OpeningHoursSpecification',
-      dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
+      dayOfWeek: [
+        'Monday',
+        'Tuesday',
+        'Wednesday',
+        'Thursday',
+        'Friday',
+        'Saturday',
+        'Sunday',
+      ],
       opens: '09:00',
-      closes: '19:00',
-    },
-    {
-      '@type': 'OpeningHoursSpecification',
-      dayOfWeek: ['Sunday'],
-      opens: '09:00',
-      closes: '15:00',
+      closes: '21:00',
     },
   ],
 };
@@ -61,12 +63,7 @@ export default function Contacts() {
             icon={<Phone size={20} className="text-brand-teal" />}
             title="Телефон"
             value={SITE_CONTACTS.phoneDisplay}
-            subtitle={
-              <>
-                <span className="block">{SITE_CONTACTS.hoursWeekdays}</span>
-                <span className="mt-1 block">{SITE_CONTACTS.hoursSunday}</span>
-              </>
-            }
+            subtitle={SITE_CONTACTS.hours}
             href={`tel:${SITE_CONTACTS.phoneRaw}`}
           />
           <ContactCard
@@ -155,8 +152,8 @@ function ContactCard({
 }: {
   icon: React.ReactNode;
   title: string;
-  value: React.ReactNode;
-  subtitle: React.ReactNode;
+  value: string;
+  subtitle: string;
   href?: string;
 }) {
   const content = (

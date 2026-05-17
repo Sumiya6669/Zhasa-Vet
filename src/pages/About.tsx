@@ -1,6 +1,5 @@
 import { Heart, ShieldCheck, Stethoscope, Target } from 'lucide-react';
 import Seo from '../components/Seo';
-import { SITE_CONTACTS } from '../mockData';
 
 export default function About() {
   return (
@@ -32,11 +31,6 @@ export default function About() {
             делаем ставку на аккуратный ассортимент, спокойный сервис и локальную доступность рядом
             с домом.
           </p>
-          <div className="rounded-[28px] border border-brand-teal/10 bg-brand-teal/5 px-5 py-4 text-sm text-slate-700">
-            <div className="text-xs font-bold uppercase tracking-widest text-brand-teal">Режим работы</div>
-            <div className="mt-3">{SITE_CONTACTS.hoursWeekdays}</div>
-            <div className="mt-1">{SITE_CONTACTS.hoursSunday}</div>
-          </div>
         </div>
 
         <div className="overflow-hidden rounded-[36px] border border-slate-200 shadow-xl">
